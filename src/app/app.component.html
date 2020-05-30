@@ -1,7 +1,7 @@
 <mat-sidenav-container class="example-container">
 
   <mat-sidenav #sidenav class="example-sidenav" mode="over">
-    <p>TEST</p>
+    <p>{{current?.name}}</p>
   </mat-sidenav>
 
   <mat-sidenav-content>
@@ -11,12 +11,13 @@
     </mat-toolbar>
 
     <div class="example-sidenav-content">
-      <div *ngFor="let employee of employees">
-        {{employee.name}}
-      </div>
-      <button type="button" mat-button (click)="sidenav.toggle()">
-        TEST
-      </button>
+
+      <mat-nav-list>
+        <mat-list-item *ngFor="let employee of employees" (click)="open(employee)">
+          {{employee.name}}
+        </mat-list-item>
+      </mat-nav-list>
+
     </div>
 
   </mat-sidenav-content>

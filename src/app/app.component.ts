@@ -1,7 +1,7 @@
-import {Component, OnInit} from '@angular/core';
+import {Component, OnInit, ViewChild} from '@angular/core';
 import {EmployeeService} from './employee-service';
 import {Employee} from './employee';
-import {Observable} from 'rxjs';
+import {MatSidenav} from '@angular/material';
 
 @Component({
   selector: 'app-root',
@@ -10,7 +10,10 @@ import {Observable} from 'rxjs';
 })
 export class AppComponent implements OnInit {
 
+  @ViewChild('sidenav', { static: true }) sidenav: MatSidenav;
+
   public employees: Employee[] = [];
+  public current: Employee;
 
   constructor(
     public employeeService: EmployeeService
@@ -27,5 +30,10 @@ export class AppComponent implements OnInit {
         console.log(e);
       }
     });
+  }
+
+  open(employee: Employee) {
+    this.current = employee;
+    this.sidenav.toggle();
   }
 }

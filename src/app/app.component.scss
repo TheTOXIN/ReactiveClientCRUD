@@ -3,10 +3,7 @@
 }
 
 .example-sidenav-content {
-  display: flex;
   height: 100%;
-  align-items: center;
-  justify-content: center;
 }
 
 .example-sidenav {
@@ -15,4 +12,9 @@
 
 .position-fixed {
   position: fixed;
+  z-index: 54;
+}
+
+table {
+  width: 100%;
 }
