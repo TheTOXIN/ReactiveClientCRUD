@@ -13,7 +13,7 @@ export class AppComponent implements OnInit {
   @ViewChild('sidenav', { static: true }) sidenav: MatSidenav;
 
   public employees: Employee[] = [];
-  public current: Employee;
+  public current: Employee = null;
 
   constructor(
     public employeeService: EmployeeService
@@ -23,11 +23,13 @@ export class AppComponent implements OnInit {
 
   ngOnInit(): void {
     this.employeeService.stream();
+    this.watch();
+  }
 
+  watch() {
     this.employeeService.employeesObservable.subscribe(e => {
       if (e != null) {
         this.employees.push(e);
-        console.log(e);
       }
     });
   }
@@ -35,5 +37,13 @@ export class AppComponent implements OnInit {
   open(employee: Employee) {
     this.current = employee;
     this.sidenav.toggle();
+  }
+
+  create() {
+    alert('CREATE');
+  }
+
+  delete() {
+    alert('DELETE');
   }
 }
