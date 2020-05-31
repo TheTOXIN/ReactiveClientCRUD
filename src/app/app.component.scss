@@ -15,11 +15,37 @@
 
 .content {
   overflow-y: auto;
-  &::-webkit-scrollbar { width: 0; }
+
+  &::-webkit-scrollbar {
+    width: 0;
+  }
 }
 
 .sidenav {
   padding: 20px;
+}
+
+.form {
+  min-width: 150px;
+  max-width: 300px;
+  width: 100%;
+
+  .form-field {
+    width: 100%;
+  }
+
+  button {
+    float: right;
+    right: 10px;
+    background-color: #0fbf0f;
+  }
+}
+
+.current {
+  img {
+    max-width: 100px;
+    max-height: 100px;
+  }
 }
 
 .employee {

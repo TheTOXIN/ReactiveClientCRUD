@@ -13,7 +13,9 @@ export class AppComponent implements OnInit {
   @ViewChild('sidenav', { static: true }) sidenav: MatSidenav;
 
   public employees: Employee[] = [];
-  public current: Employee = null;
+  public current: Employee = new Employee();
+
+  public addMode = true;
 
   constructor(
     public employeeService: EmployeeService
@@ -35,15 +37,23 @@ export class AppComponent implements OnInit {
   }
 
   open(employee: Employee) {
+    this.addMode = false;
     this.current = employee;
     this.sidenav.toggle();
   }
 
-  create() {
-    alert('CREATE');
+  add() {
+    this.addMode = true;
+    this.current = new Employee();
+    this.current.work = true;
+    this.sidenav.toggle();
   }
 
-  delete() {
-    alert('DELETE');
+  save() {
+    this.sidenav.toggle();
+  }
+
+  remove() {
+
   }
 }

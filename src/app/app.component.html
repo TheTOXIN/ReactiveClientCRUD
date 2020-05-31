@@ -1,19 +1,35 @@
 <mat-toolbar color="primary" class="toolbar">
   <span>REACTIVE CRUD</span>
   <span style="flex: 1 1 auto"></span>
-  <button mat-mini-fab color="link" (click)="create()">
+  <button mat-mini-fab color="link" (click)="add()">
     <mat-icon>add</mat-icon>
   </button>
 </mat-toolbar>
 <mat-sidenav-container class="container">
   <mat-sidenav #sidenav class="sidenav" mode="over">
-    <div>{{current?.id}}</div>
-    <div>{{current?.name}}</div>
-    <div><img [src]="current?.photo" alt="..."></div>
-    <div>{{current?.position}}</div>
-    <div>{{current?.salary}}</div>
-    <div>{{current?.work}}</div>
-    <div>{{current?.hired}}</div>
+    <div class="current" *ngIf="!addMode">
+      <p>ID={{current?.id}}</p>
+      <img [src]="current?.photo" alt="...">
+      <p>{{current?.hired}}</p>
+    </div>
+    <form class="form">
+      <mat-form-field class="form-field">
+        <mat-label>Name</mat-label>
+        <label><input matInput [(ngModel)]="current.name" name="name"></label>
+      </mat-form-field>
+      <mat-form-field class="form-field">
+        <mat-label>Position</mat-label>
+        <label><input matInput [(ngModel)]="current.position" name="position"></label>
+      </mat-form-field>
+      <mat-form-field class="form-field">
+        <mat-label>Salary</mat-label>
+        <label><input matInput [(ngModel)]="current.salary" name="salary"></label>
+      </mat-form-field>
+      <mat-slide-toggle [(ngModel)]="current.work" name="work">Work</mat-slide-toggle>
+      <button mat-mini-fab (click)="save()">
+        <mat-icon>save</mat-icon>
+      </button>
+    </form>
   </mat-sidenav>
   <mat-sidenav-content class="content">
     <mat-nav-list>
@@ -25,7 +41,7 @@
           <div>{{employee.position}}🛠</div>
           <div>{{employee.salary}}💰</div>
         </div>
-        <button mat-mini-fab color="warn" (click)="delete()">
+        <button mat-mini-fab color="warn" (click)="remove()">
           <mat-icon>delete</mat-icon>
         </button>
       </mat-list-item>
