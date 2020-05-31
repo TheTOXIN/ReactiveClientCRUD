@@ -3,7 +3,7 @@ import {EmployeeService} from './employee-service';
 import {Employee} from './employee';
 import {MatSidenav, MatSnackBar} from '@angular/material';
 import {Observable} from 'rxjs';
-import {animate, style, transition, trigger} from '@angular/animations';
+import {animate, keyframes, style, transition, trigger} from '@angular/animations';
 
 @Component({
   selector: 'app-root',
@@ -12,8 +12,12 @@ import {animate, style, transition, trigger} from '@angular/animations';
   animations: [
     trigger('items', [
       transition(':enter', [
-        style({transform: 'scale(1.025)', opacity: 0.75}),
-        animate('1s', style({transform: 'scale(1)', opacity: 1}))
+        style({transform: 'scale(0.75)'}),
+        animate('0.5s', keyframes([
+          style({transform: 'scale(0.975)'}),
+          style({transform: 'scale(1.025)'}),
+          style({transform: 'scale(1)'})
+        ]))
       ])
     ])
   ]
@@ -43,13 +47,16 @@ export class AppComponent implements OnInit {
 
   watch() {
     this.employeeService.employeesObservable.subscribe(data => {
-      if (data != null) {
-        const index = this.employees.findIndex(employee => employee.id === data.id);
-        if (index < 0) {
-          this.employees.push(data);
-        } else {
-          this.employees[index] = data;
-        }
+      if (data == null) {
+        return;
+      }
+
+      const index = this.index(data);
+
+      if (index < 0) {
+        this.employees.push(data);
+      } else {
+        this.employees[index] = data;
       }
     });
   }
@@ -61,6 +68,10 @@ export class AppComponent implements OnInit {
     this.employeeService.read(employee.id).subscribe(data => {
       this.current = data;
       this.loader = false;
+    }, () => {
+      this.sidenav.toggle();
+      this.showBar('NOT EXIST');
+      this.clear(this.index(employee));
     });
 
     this.sidenav.toggle();
@@ -78,6 +89,7 @@ export class AppComponent implements OnInit {
 
   save() {
     this.sidenav.close();
+    this.loader = true;
 
     let saver: Observable<Employee>;
 
@@ -94,12 +106,21 @@ export class AppComponent implements OnInit {
   }
 
   remove(index: number, employee: Employee) {
-    this.employees.splice(index, 1);
+    this.loader = true;
+    this.clear(index);
 
     this.employeeService.delete(employee.id).subscribe(
       () => this.success(),
       () => this.error()
     );
+  }
+
+  index(search: Employee): number {
+    return this.employees.findIndex(employee => employee.id === search.id);
+  }
+
+  clear(index: number) {
+    this.employees.splice(index, 1);
   }
 
   success() {
@@ -112,5 +133,6 @@ export class AppComponent implements OnInit {
 
   showBar(message: string) {
     this.snackBar.open(message, 'OK', {duration: 1000});
+    this.loader = false;
   }
 }

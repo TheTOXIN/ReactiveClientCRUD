@@ -27,7 +27,7 @@
           <mat-label>Salary</mat-label>
           <label><input matInput [(ngModel)]="current.salary" name="salary" type="number"></label>
         </mat-form-field>
-        <mat-slide-toggle [(ngModel)]="current.work" name="work">Work</mat-slide-toggle>
+        <mat-slide-toggle [(ngModel)]="current.work" [disabled]="addMode" name="work">Work</mat-slide-toggle>
         <button mat-mini-fab (click)="save()">
           <mat-icon>save</mat-icon>
         </button>
@@ -40,7 +40,7 @@
   <mat-sidenav-content class="content">
     <mat-nav-list>
       <mat-list-item *ngFor="let employee of employees; let i = index">
-        <div class="employee" @items (click)="open(employee)">
+        <div class="employee" @items (click)="open(employee)" [style.opacity]="!employee.work ? 0.5 : 1">
           <div><img [src]="employee.photo" alt="..."></div>
           <div>{{employee.name}}</div>
           <div>{{employee.position}}🛠</div>
