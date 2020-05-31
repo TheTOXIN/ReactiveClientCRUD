@@ -3,11 +3,20 @@ import {EmployeeService} from './employee-service';
 import {Employee} from './employee';
 import {MatSidenav, MatSnackBar} from '@angular/material';
 import {Observable} from 'rxjs';
+import {animate, style, transition, trigger} from '@angular/animations';
 
 @Component({
   selector: 'app-root',
   templateUrl: './app.component.html',
-  styleUrls: ['./app.component.scss']
+  styleUrls: ['./app.component.scss'],
+  animations: [
+    trigger('items', [
+      transition(':enter', [
+        style({transform: 'scale(1.025)', opacity: 0.75}),
+        animate('0.5s', style({transform: 'scale(1)', opacity: 1}))
+      ])
+    ])
+  ]
 })
 export class AppComponent implements OnInit {
 
@@ -37,7 +46,7 @@ export class AppComponent implements OnInit {
       if (data != null) {
         const index = this.employees.findIndex(employee => employee.id === data.id);
         if (index < 0) {
-          this.employees.unshift(data);
+          this.employees.push(data);
         } else {
           this.employees[index] = data;
         }
