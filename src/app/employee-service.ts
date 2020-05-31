@@ -18,6 +18,22 @@ export class EmployeeService {
     this.employeesObservable = this.employeesBehavior.asObservable();
   }
 
+  public create() {
+
+  }
+
+  public read() {
+
+  }
+
+  public update() {
+
+  }
+
+  public delete() {
+
+  }
+
   public stream() {
     const streamURL = this.URL + '/stream';
     const eventSource = new EventSource(streamURL);

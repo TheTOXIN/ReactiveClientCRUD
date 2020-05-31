@@ -1,46 +1,34 @@
-<mat-sidenav-container class="example-container">
-
-  <mat-sidenav #sidenav class="example-sidenav" mode="over">
-    <div class="">
-      <div>{{current?.id}}</div>
-      <div>{{current?.name}}</div>
-      <div><img [src]="current?.photo" alt="..."></div>
-      <div>{{current?.position}}</div>
-      <div>{{current?.salary}}</div>
-      <div>{{current?.work}}</div>
-      <div>{{current?.hired}}</div>
-    </div>
+<mat-toolbar color="primary" class="toolbar">
+  <span>REACTIVE CRUD</span>
+  <span style="flex: 1 1 auto"></span>
+  <button mat-mini-fab color="link" (click)="create()">
+    <mat-icon>add</mat-icon>
+  </button>
+</mat-toolbar>
+<mat-sidenav-container class="container">
+  <mat-sidenav #sidenav class="sidenav" mode="over">
+    <div>{{current?.id}}</div>
+    <div>{{current?.name}}</div>
+    <div><img [src]="current?.photo" alt="..."></div>
+    <div>{{current?.position}}</div>
+    <div>{{current?.salary}}</div>
+    <div>{{current?.work}}</div>
+    <div>{{current?.hired}}</div>
   </mat-sidenav>
-
-  <mat-sidenav-content>
-
-    <mat-toolbar color="primary">
-      <span>REACTIVE CRUD</span>
-      <span style="flex: 1 1 auto"></span>
-      <button mat-mini-fab color="link" (click)="create()">
-        <mat-icon>add</mat-icon>
-      </button>
-    </mat-toolbar>
-
-    <div class="example-sidenav-content">
-
-      <mat-nav-list>
-        <mat-list-item *ngFor="let employee of employees; let i = index">
-          <div class="employee" (click)="open(employee)">
-            <div>#{{i}}</div>
-            <div><img [src]="employee.photo" alt="..."></div>
-            <div>{{employee.name}}</div>
-            <div>{{employee.position}}🛠</div>
-            <div>{{employee.salary}}💰</div>
-          </div>
-          <button mat-mini-fab color="warn" (click)="delete()">
-            <mat-icon>delete</mat-icon>
-          </button>
-        </mat-list-item>
-      </mat-nav-list>
-
-    </div>
-
+  <mat-sidenav-content class="content">
+    <mat-nav-list>
+      <mat-list-item *ngFor="let employee of employees; let i = index">
+        <div class="employee" (click)="open(employee)">
+          <div>#{{i}}</div>
+          <div><img [src]="employee.photo" alt="..."></div>
+          <div>{{employee.name}}</div>
+          <div>{{employee.position}}🛠</div>
+          <div>{{employee.salary}}💰</div>
+        </div>
+        <button mat-mini-fab color="warn" (click)="delete()">
+          <mat-icon>delete</mat-icon>
+        </button>
+      </mat-list-item>
+    </mat-nav-list>
   </mat-sidenav-content>
-
 </mat-sidenav-container>
