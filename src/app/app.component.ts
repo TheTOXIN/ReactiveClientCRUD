@@ -13,7 +13,7 @@ export class AppComponent implements OnInit {
 
   @ViewChild('sidenav', {static: true}) sidenav: MatSidenav;
 
-  public employees: Map<string, Employee>;
+  public employees: Employee[];
   public current: Employee = new Employee();
 
   addMode = true;
@@ -23,7 +23,7 @@ export class AppComponent implements OnInit {
     public employeeService: EmployeeService,
     public snackBar: MatSnackBar
   ) {
-    this.employees = new Map<string, Employee>();
+    this.employees = [];
     this.current = new Employee();
   }
 
@@ -33,9 +33,14 @@ export class AppComponent implements OnInit {
   }
 
   watch() {
-    this.employeeService.employeesObservable.subscribe(e => {
-      if (e != null) {
-        this.employees.set(e.id, e);
+    this.employeeService.employeesObservable.subscribe(data => {
+      if (data != null) {
+        const index = this.employees.findIndex(employee => employee.id === data.id);
+        if (index < 0) {
+          this.employees.unshift(data);
+        } else {
+          this.employees[index] = data;
+        }
       }
     });
   }
@@ -79,8 +84,8 @@ export class AppComponent implements OnInit {
     );
   }
 
-  remove(employee: Employee) {
-    this.employees.delete(employee.id);
+  remove(index: number, employee: Employee) {
+    this.employees.splice(index, 1);
 
     this.employeeService.delete(employee.id).subscribe(
       () => this.success(),
