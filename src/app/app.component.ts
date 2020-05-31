@@ -54,7 +54,7 @@ export class AppComponent implements OnInit {
       const index = this.index(data);
 
       if (index < 0) {
-        this.employees.push(data);
+        this.employees.unshift(data);
       } else {
         this.employees[index] = data;
       }
