@@ -35,13 +35,12 @@
     <mat-nav-list>
       <mat-list-item *ngFor="let employee of employees; let i = index">
         <div class="employee" (click)="open(employee)">
-          <div>#{{i}}</div>
           <div><img [src]="employee.photo" alt="..."></div>
           <div>{{employee.name}}</div>
           <div>{{employee.position}}🛠</div>
           <div>{{employee.salary}}💰</div>
         </div>
-        <button mat-mini-fab color="warn" (click)="remove()">
+        <button mat-mini-fab color="warn" (click)="remove(i, employee)">
           <mat-icon>delete</mat-icon>
         </button>
       </mat-list-item>

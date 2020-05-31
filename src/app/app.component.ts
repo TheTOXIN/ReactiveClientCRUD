@@ -31,7 +31,7 @@ export class AppComponent implements OnInit {
   watch() {
     this.employeeService.employeesObservable.subscribe(e => {
       if (e != null) {
-        this.employees.push(e);
+        this.employees.unshift(e);
       }
     });
   }
@@ -46,14 +46,14 @@ export class AppComponent implements OnInit {
     this.addMode = true;
     this.current = new Employee();
     this.current.work = true;
-    this.sidenav.toggle();
+    this.sidenav.open();
   }
 
   save() {
-    this.sidenav.toggle();
+    this.sidenav.close();
   }
 
-  remove() {
-
+  remove(index: number, employee: Employee) {
+    this.employees.splice(index, 1);
   }
 }
