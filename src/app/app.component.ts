@@ -13,7 +13,7 @@ import {animate, style, transition, trigger} from '@angular/animations';
     trigger('items', [
       transition(':enter', [
         style({transform: 'scale(1.025)', opacity: 0.75}),
-        animate('0.5s', style({transform: 'scale(1)', opacity: 1}))
+        animate('1s', style({transform: 'scale(1)', opacity: 1}))
       ])
     ])
   ]

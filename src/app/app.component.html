@@ -39,8 +39,8 @@
   </mat-sidenav>
   <mat-sidenav-content class="content">
     <mat-nav-list>
-      <mat-list-item @items *ngFor="let employee of employees; let i = index">
-        <div class="employee" (click)="open(employee)">
+      <mat-list-item *ngFor="let employee of employees; let i = index">
+        <div class="employee" @items (click)="open(employee)">
           <div><img [src]="employee.photo" alt="..."></div>
           <div>{{employee.name}}</div>
           <div>{{employee.position}}🛠</div>
