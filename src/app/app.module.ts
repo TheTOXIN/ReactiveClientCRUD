@@ -7,9 +7,9 @@ import {
   MatButtonModule,
   MatIconModule,
   MatInputModule,
-  MatListModule,
+  MatListModule, MatProgressBarModule, MatProgressSpinnerModule,
   MatSidenavModule,
-  MatSlideToggleModule,
+  MatSlideToggleModule, MatSnackBarModule,
   MatTableModule,
   MatToolbarModule
 } from '@angular/material';
@@ -34,6 +34,9 @@ import {FormsModule} from '@angular/forms';
     MatInputModule,
     FormsModule,
     MatSlideToggleModule,
+    MatProgressSpinnerModule,
+    MatSnackBarModule,
+    MatProgressBarModule
   ],
   providers: [
     EmployeeService

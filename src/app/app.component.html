@@ -5,42 +5,48 @@
     <mat-icon>add</mat-icon>
   </button>
 </mat-toolbar>
+<mat-progress-bar *ngIf="loader" mode="indeterminate"></mat-progress-bar>
 <mat-sidenav-container class="container">
   <mat-sidenav #sidenav class="sidenav" mode="over">
-    <div class="current" *ngIf="!addMode">
-      <p>ID={{current?.id}}</p>
-      <img [src]="current?.photo" alt="...">
-      <p>{{current?.hired}}</p>
+    <div *ngIf="!loader; else spinner">
+      <div class="current" *ngIf="!addMode">
+        <p>ID={{current?.id}}</p>
+        <img [src]="current?.photo" alt="...">
+        <p>{{current?.hired}}</p>
+      </div>
+      <form class="form">
+        <mat-form-field class="form-field">
+          <mat-label>Name</mat-label>
+          <label><input matInput [(ngModel)]="current.name" name="name"></label>
+        </mat-form-field>
+        <mat-form-field class="form-field">
+          <mat-label>Position</mat-label>
+          <label><input matInput [(ngModel)]="current.position" name="position"></label>
+        </mat-form-field>
+        <mat-form-field class="form-field">
+          <mat-label>Salary</mat-label>
+          <label><input matInput [(ngModel)]="current.salary" name="salary"></label>
+        </mat-form-field>
+        <mat-slide-toggle [(ngModel)]="current.work" name="work">Work</mat-slide-toggle>
+        <button mat-mini-fab (click)="save()">
+          <mat-icon>save</mat-icon>
+        </button>
+      </form>
     </div>
-    <form class="form">
-      <mat-form-field class="form-field">
-        <mat-label>Name</mat-label>
-        <label><input matInput [(ngModel)]="current.name" name="name"></label>
-      </mat-form-field>
-      <mat-form-field class="form-field">
-        <mat-label>Position</mat-label>
-        <label><input matInput [(ngModel)]="current.position" name="position"></label>
-      </mat-form-field>
-      <mat-form-field class="form-field">
-        <mat-label>Salary</mat-label>
-        <label><input matInput [(ngModel)]="current.salary" name="salary"></label>
-      </mat-form-field>
-      <mat-slide-toggle [(ngModel)]="current.work" name="work">Work</mat-slide-toggle>
-      <button mat-mini-fab (click)="save()">
-        <mat-icon>save</mat-icon>
-      </button>
-    </form>
+    <ng-template #spinner>
+      <div class="spinner"><mat-spinner></mat-spinner></div>
+    </ng-template>
   </mat-sidenav>
   <mat-sidenav-content class="content">
     <mat-nav-list>
-      <mat-list-item *ngFor="let employee of employees; let i = index">
-        <div class="employee" (click)="open(employee)">
-          <div><img [src]="employee.photo" alt="..."></div>
-          <div>{{employee.name}}</div>
-          <div>{{employee.position}}🛠</div>
-          <div>{{employee.salary}}💰</div>
+      <mat-list-item *ngFor="let employee of employees | keyvalue">
+        <div class="employee" (click)="open(employee.value)">
+          <div><img [src]="employee.value.photo" alt="..."></div>
+          <div>{{employee.value.name}}</div>
+          <div>{{employee.value.position}}🛠</div>
+          <div>{{employee.value.salary}}💰</div>
         </div>
-        <button mat-mini-fab color="warn" (click)="remove(i, employee)">
+        <button mat-mini-fab color="warn" (click)="remove(employee.value)">
           <mat-icon>delete</mat-icon>
         </button>
       </mat-list-item>
