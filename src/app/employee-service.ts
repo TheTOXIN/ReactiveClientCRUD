@@ -10,6 +10,7 @@ export class EmployeeService {
   public employeesObservable: Observable<Employee>;
 
   private URL = 'http://localhost:8080';
+  private EMPLOYEE_URL = this.URL + '/employees';
 
   constructor(
     private http: HttpClient
@@ -18,20 +19,20 @@ export class EmployeeService {
     this.employeesObservable = this.employeesBehavior.asObservable();
   }
 
-  public create() {
-
+  public create(employee: Employee): Observable<Employee> {
+    return this.http.post<Employee>(this.EMPLOYEE_URL, employee).pipe();
   }
 
-  public read() {
-
+  public read(id: string): Observable<Employee> {
+    return this.http.get<Employee>(`${this.EMPLOYEE_URL}/${id}`).pipe();
   }
 
-  public update() {
-
+  public update(employee: Employee) {
+    return this.http.put<Employee>(`${this.EMPLOYEE_URL}/${employee.id}`, employee).pipe();
   }
 
-  public delete() {
-
+  public delete(id: string): Observable<void> {
+    return this.http.delete<void>(`${this.EMPLOYEE_URL}/${id}`).pipe();
   }
 
   public stream() {
