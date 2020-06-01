@@ -14,6 +14,9 @@
       <div class="current" *ngIf="!addMode">
         <p class="current-id">ID={{current?.id}}</p>
         <img [src]="current?.photo" alt="...">
+        <div class="current-action">
+          <div>{{activities[current?.activity]}}</div>
+        </div>
       </div>
       <form class="form">
         <mat-form-field class="form-field">
@@ -51,7 +54,8 @@
           <div><img [src]="employee.photo" alt="..."></div>
           <div>{{employee.name}}😎</div>
           <div>{{employee.position}}🔨</div>
-          <div>{{employee.salary}}💰</div>
+          <div>{{employee.salary}}💲</div>
+          <div>ACT: {{activities[employee.activity]}}</div>
         </div>
         <button mat-mini-fab color="warn" (click)="remove(i, employee)">
           <mat-icon>delete</mat-icon>

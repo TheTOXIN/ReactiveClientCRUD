@@ -5,6 +5,7 @@ import {MatIconRegistry, MatSidenav, MatSnackBar} from '@angular/material';
 import {Observable} from 'rxjs';
 import {animate, keyframes, style, transition, trigger} from '@angular/animations';
 import {DomSanitizer} from '@angular/platform-browser';
+import {EmployeeActivity} from './employee-activity';
 
 @Component({
   selector: 'app-root',
@@ -34,6 +35,8 @@ export class AppComponent implements OnInit {
 
   addMode = true;
   loader = true;
+
+  activities = EmployeeActivity;
 
   constructor(
     private employeeService: EmployeeService,
@@ -101,6 +104,7 @@ export class AppComponent implements OnInit {
 
     this.current = new Employee();
     this.current.work = true;
+    this.current.hired = new Date();
 
     this.sidenav.open();
   }
