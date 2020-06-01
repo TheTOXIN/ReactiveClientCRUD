@@ -6,8 +6,11 @@ import {Employee} from './Employee';
 @Injectable()
 export class EmployeeService {
 
-  public employeesBehavior: BehaviorSubject<Employee>;
-  public employeesObservable: Observable<Employee>;
+  private hiredEmployeesBehavior: BehaviorSubject<Employee>;
+  public hiredEmployeesObservable: Observable<Employee>;
+
+  private firedEmployeesBehavior: BehaviorSubject<Employee>;
+  public firedEmployeesObservable: Observable<Employee>;
 
   private URL = 'http://localhost:8080';
   private EMPLOYEE_URL = this.URL + '/employees';
@@ -15,8 +18,27 @@ export class EmployeeService {
   constructor(
     private http: HttpClient
   ) {
-    this.employeesBehavior = new BehaviorSubject(null);
-    this.employeesObservable = this.employeesBehavior.asObservable();
+    this.hiredEmployeesBehavior = new BehaviorSubject(null);
+    this.hiredEmployeesObservable = this.hiredEmployeesBehavior.asObservable();
+
+    this.firedEmployeesBehavior = new BehaviorSubject(null);
+    this.firedEmployeesObservable = this.firedEmployeesBehavior.asObservable();
+  }
+
+  public stream() {
+    const streamURL = this.URL + '/stream';
+    const eventSource = new EventSource(streamURL);
+
+    eventSource.addEventListener('hired-employee', (event: any) => {
+      const employee = JSON.parse(event.data) as Employee;
+      this.hiredEmployeesBehavior.next(employee);
+    });
+
+    eventSource.addEventListener('fired-employee', (event: any) => {
+      const employee = JSON.parse(event.data) as Employee;
+      console.log('FIRED: ' + employee.name);
+      this.firedEmployeesBehavior.next(employee);
+    });
   }
 
   public create(employee: Employee): Observable<Employee> {
@@ -37,15 +59,5 @@ export class EmployeeService {
 
   public all(): Observable<Employee[]> {
     return this.http.get<Employee[]>(this.EMPLOYEE_URL).pipe();
-  }
-
-  public stream() {
-    const streamURL = this.URL + '/stream';
-    const eventSource = new EventSource(streamURL);
-
-    eventSource.addEventListener('employees', (event: any) => {
-      const employee = JSON.parse(event.data) as Employee;
-      this.employeesBehavior.next(employee);
-    });
   }
 }

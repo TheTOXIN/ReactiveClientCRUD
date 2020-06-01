@@ -29,8 +29,8 @@ export class AppComponent implements OnInit {
 
   public current: Employee;
 
-  public employees: Employee[];
-  public removed: Employee[];
+  public hiredEmployees: Employee[];
+  public firedEmployees: Employee[];
 
   addMode = true;
   loader = true;
@@ -46,8 +46,8 @@ export class AppComponent implements OnInit {
       sanitizer.bypassSecurityTrustResourceUrl('assets/github.svg')
     );
 
-    this.employees = [];
-    this.removed = [];
+    this.hiredEmployees = [];
+    this.firedEmployees = [];
 
     this.current = new Employee();
   }
@@ -56,25 +56,35 @@ export class AppComponent implements OnInit {
     this.employeeService.stream();
 
     this.employeeService.all().subscribe(data => {
-      this.employees = data;
+      this.hiredEmployees = data;
       this.loader = false;
 
-      this.watch();
+      this.watchHired();
+      this.watchFired();
     });
   }
 
-  watch() {
-    this.employeeService.employeesObservable.subscribe(data => {
-      if (data == null || this.removed[data.id]) {
-        return;
+  watchHired() {
+    this.employeeService.hiredEmployeesObservable.subscribe(data => {
+      if (data != null && !this.firedEmployees[data.id]) {
+        const index = this.index(data);
+        if (index < 0) {
+          this.hiredEmployees.unshift(data);
+        } else {
+          this.hiredEmployees[index] = data;
+        }
       }
+    });
+  }
 
-      const index = this.index(data);
-
-      if (index < 0) {
-        this.employees.unshift(data);
-      } else {
-        this.employees[index] = data;
+  watchFired() {
+    this.employeeService.firedEmployeesObservable.subscribe(data => {
+      if (data != null) {
+        if (!this.firedEmployees[data.id]) {
+          const index = this.index(data);
+          this.clear(index);
+          this.firedEmployees[data.id] = data;
+        }
       }
     });
   }
@@ -126,7 +136,7 @@ export class AppComponent implements OnInit {
   remove(index: number, employee: Employee) {
     this.loader = true;
 
-    this.removed[employee.id] = employee;
+    this.firedEmployees[employee.id] = employee;
     this.clear(index);
 
     this.employeeService.delete(employee.id).subscribe(
@@ -136,11 +146,15 @@ export class AppComponent implements OnInit {
   }
 
   index(search: Employee): number {
-    return this.employees.findIndex(employee => employee.id === search.id);
+    return this.hiredEmployees.findIndex(
+      employee => employee.id === search.id
+    );
   }
 
   clear(index: number) {
-    this.employees.splice(index, 1);
+    if (index >= 0) {
+      this.hiredEmployees.splice(index, 1);
+    }
   }
 
   success() {
