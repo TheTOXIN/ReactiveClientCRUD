@@ -35,6 +35,10 @@ export class EmployeeService {
     return this.http.delete<void>(`${this.EMPLOYEE_URL}/${id}`).pipe();
   }
 
+  public all(): Observable<Employee[]> {
+    return this.http.get<Employee[]>(this.EMPLOYEE_URL).pipe();
+  }
+
   public stream() {
     const streamURL = this.URL + '/stream';
     const eventSource = new EventSource(streamURL);

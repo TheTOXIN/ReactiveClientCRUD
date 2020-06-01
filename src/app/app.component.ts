@@ -32,7 +32,7 @@ export class AppComponent implements OnInit {
   public removed: Employee[];
 
   addMode = true;
-  loader = false;
+  loader = true;
 
   constructor(
     public employeeService: EmployeeService,
@@ -46,7 +46,13 @@ export class AppComponent implements OnInit {
 
   ngOnInit(): void {
     this.employeeService.stream();
-    this.watch();
+
+    this.employeeService.all().subscribe(data => {
+      this.employees = data;
+      this.loader = false;
+
+      this.watch();
+    });
   }
 
   watch() {
