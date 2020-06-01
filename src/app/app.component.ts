@@ -1,9 +1,10 @@
 import {Component, OnInit, ViewChild} from '@angular/core';
 import {EmployeeService} from './employee-service';
 import {Employee} from './employee';
-import {MatSidenav, MatSnackBar} from '@angular/material';
+import {MatBottomSheet, MatIconRegistry, MatSidenav, MatSnackBar} from '@angular/material';
 import {Observable} from 'rxjs';
 import {animate, keyframes, style, transition, trigger} from '@angular/animations';
+import {DomSanitizer} from '@angular/platform-browser';
 
 @Component({
   selector: 'app-root',
@@ -35,9 +36,16 @@ export class AppComponent implements OnInit {
   loader = true;
 
   constructor(
-    public employeeService: EmployeeService,
-    public snackBar: MatSnackBar
+    private employeeService: EmployeeService,
+    private snackBar: MatSnackBar,
+    private iconRegistry: MatIconRegistry,
+    private sanitizer: DomSanitizer
   ) {
+    iconRegistry.addSvgIcon(
+      'git-hub-svg',
+      sanitizer.bypassSecurityTrustResourceUrl('assets/github.svg')
+    );
+
     this.employees = [];
     this.removed = [];
 
@@ -146,5 +154,9 @@ export class AppComponent implements OnInit {
   showBar(message: string) {
     this.snackBar.open(message, 'OK', {duration: 1000});
     this.loader = false;
+  }
+
+  gitHub() {
+    document.location.href = 'https://github.com/TheTOXIN/ReactiveServerCRUD';
   }
 }

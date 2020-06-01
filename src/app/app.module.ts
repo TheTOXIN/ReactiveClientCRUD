@@ -5,6 +5,7 @@ import { AppComponent } from './app.component';
 import {BrowserAnimationsModule} from '@angular/platform-browser/animations';
 import {
   MatButtonModule,
+  MatChipsModule,
   MatIconModule,
   MatInputModule,
   MatListModule, MatProgressBarModule, MatProgressSpinnerModule,
@@ -36,7 +37,8 @@ import {FormsModule} from '@angular/forms';
     MatSlideToggleModule,
     MatProgressSpinnerModule,
     MatSnackBarModule,
-    MatProgressBarModule
+    MatProgressBarModule,
+    MatChipsModule
   ],
   providers: [
     EmployeeService

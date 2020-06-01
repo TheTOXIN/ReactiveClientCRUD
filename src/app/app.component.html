@@ -1,18 +1,18 @@
-<mat-toolbar color="primary" class="toolbar">
+<mat-toolbar color="primary" class="header">
   <span>REACTIVE CRUD</span>
   <span style="flex: 1 1 auto"></span>
   <button mat-mini-fab color="link" (click)="add()">
     <mat-icon>add</mat-icon>
   </button>
 </mat-toolbar>
+
 <mat-progress-bar *ngIf="loader" mode="indeterminate"></mat-progress-bar>
 <mat-sidenav-container class="container">
   <mat-sidenav #sidenav class="sidenav" mode="over">
     <div *ngIf="!loader; else spinner">
       <div class="current" *ngIf="!addMode">
-        <p>ID={{current?.id}}</p>
+        <p class="current-id">ID={{current?.id}}</p>
         <img [src]="current?.photo" alt="...">
-        <p>{{current?.hired}}</p>
       </div>
       <form class="form">
         <mat-form-field class="form-field">
@@ -53,3 +53,11 @@
     </mat-nav-list>
   </mat-sidenav-content>
 </mat-sidenav-container>
+
+<mat-toolbar class="footer">
+  <span>Developed by TOXIN</span>
+  <span style="flex: 1 1 auto"></span>
+  <button mat-mini-fab color="primary" (click)="gitHub()">
+    <mat-icon svgIcon="git-hub-svg"></mat-icon>
+  </button>
+</mat-toolbar>
