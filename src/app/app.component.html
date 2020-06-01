@@ -49,8 +49,8 @@
       <mat-list-item *ngFor="let employee of employees; let i = index">
         <div class="employee" @items (click)="open(employee)" [style.opacity]="!employee.work ? 0.3 : 1">
           <div><img [src]="employee.photo" alt="..."></div>
-          <div>{{employee.name}}</div>
-          <div>{{employee.position}}🛠</div>
+          <div>{{employee.name}}😎</div>
+          <div>{{employee.position}}🔨</div>
           <div>{{employee.salary}}💰</div>
         </div>
         <button mat-mini-fab color="warn" (click)="remove(i, employee)">
