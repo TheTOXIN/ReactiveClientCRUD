@@ -41,6 +41,7 @@
         <button mat-mini-fab (click)="save()">
           <mat-icon>save</mat-icon>
         </button>
+        <mat-error *ngIf="formError" class="from-error">NOT VALID</mat-error>
       </form>
     </div>
     <ng-template #spinner>

@@ -35,6 +35,7 @@ export class AppComponent implements OnInit {
 
   addMode = true;
   loader = true;
+  formError = false;
 
   activities = EmployeeActivity;
 
@@ -95,6 +96,7 @@ export class AppComponent implements OnInit {
       this.clear(this.index(employee));
     });
 
+    this.formError = false;
     this.sidenav.toggle();
   }
 
@@ -103,13 +105,16 @@ export class AppComponent implements OnInit {
     this.loader = false;
 
     this.current = new Employee();
-    this.current.work = true;
+
     this.current.hired = new Date();
+    this.current.work = true;
 
     this.sidenav.open();
   }
 
   save() {
+    if (this.invalid(this.current)) { return; }
+
     this.sidenav.close();
     this.loader = true;
 
@@ -125,6 +130,16 @@ export class AppComponent implements OnInit {
       () => this.success(),
       () => this.error()
     );
+  }
+
+  invalid(employee: Employee) {
+    const a = employee.name && employee.name !== '';
+    const b = employee.position && employee.position !== '';
+    const c = employee.salary && employee.salary > 0;
+
+    this.formError = !a || !b || !c;
+
+    return this.formError;
   }
 
   remove(index: number, employee: Employee) {
