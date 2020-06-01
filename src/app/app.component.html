@@ -1,5 +1,6 @@
-<mat-toolbar color="primary" class="header">
+<mat-toolbar color="primary" class="header toolbar">
   <span>REACTIVE CRUD</span>
+  <img [src]="'assets/rocket.png'" alt="...">
   <span style="flex: 1 1 auto"></span>
   <button mat-mini-fab color="link" (click)="add()">
     <mat-icon>add</mat-icon>
@@ -60,8 +61,9 @@
   </mat-sidenav-content>
 </mat-sidenav-container>
 
-<mat-toolbar class="footer">
+<mat-toolbar class="footer toolbar">
   <span>Developed by TOXIN</span>
+  <img [src]="'assets/toxic.png'" alt="...">
   <span style="flex: 1 1 auto"></span>
   <button mat-mini-fab color="primary" (click)="gitHub()">
     <mat-icon svgIcon="git-hub-svg"></mat-icon>
