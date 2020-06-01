@@ -1,7 +1,7 @@
 import {Component, OnInit, ViewChild} from '@angular/core';
 import {EmployeeService} from './employee-service';
 import {Employee} from './employee';
-import {MatBottomSheet, MatIconRegistry, MatSidenav, MatSnackBar} from '@angular/material';
+import {MatIconRegistry, MatSidenav, MatSnackBar} from '@angular/material';
 import {Observable} from 'rxjs';
 import {animate, keyframes, style, transition, trigger} from '@angular/animations';
 import {DomSanitizer} from '@angular/platform-browser';

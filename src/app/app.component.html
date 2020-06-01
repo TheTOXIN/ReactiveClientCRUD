@@ -27,6 +27,12 @@
           <mat-label>Salary</mat-label>
           <label><input matInput [(ngModel)]="current.salary" name="salary" type="number"></label>
         </mat-form-field>
+        <mat-form-field class="form-field">
+          <mat-label>Hired</mat-label>
+          <label><input matInput [matDatepicker]="picker" [(ngModel)]="current.hired" name="hired"></label>
+          <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
+          <mat-datepicker #picker></mat-datepicker>
+        </mat-form-field>
         <mat-slide-toggle [(ngModel)]="current.work" [disabled]="addMode" name="work">Work</mat-slide-toggle>
         <button mat-mini-fab (click)="save()">
           <mat-icon>save</mat-icon>

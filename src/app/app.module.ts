@@ -6,9 +6,10 @@ import {BrowserAnimationsModule} from '@angular/platform-browser/animations';
 import {
   MatButtonModule,
   MatChipsModule,
+  MatDatepickerModule,
   MatIconModule,
   MatInputModule,
-  MatListModule, MatProgressBarModule, MatProgressSpinnerModule,
+  MatListModule, MatNativeDateModule, MatProgressBarModule, MatProgressSpinnerModule,
   MatSidenavModule,
   MatSlideToggleModule, MatSnackBarModule,
   MatTableModule,
@@ -38,7 +39,9 @@ import {FormsModule} from '@angular/forms';
     MatProgressSpinnerModule,
     MatSnackBarModule,
     MatProgressBarModule,
-    MatChipsModule
+    MatChipsModule,
+    MatDatepickerModule,
+    MatNativeDateModule
   ],
   providers: [
     EmployeeService
