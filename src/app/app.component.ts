@@ -12,7 +12,7 @@ import {animate, keyframes, style, transition, trigger} from '@angular/animation
   animations: [
     trigger('items', [
       transition(':enter', [
-        style({transform: 'scale(0.75)'}),
+        style({transform: 'scale(0.975)'}),
         animate('0.5s', keyframes([
           style({transform: 'scale(0.975)'}),
           style({transform: 'scale(1.025)'}),
@@ -26,8 +26,10 @@ export class AppComponent implements OnInit {
 
   @ViewChild('sidenav', {static: true}) sidenav: MatSidenav;
 
+  public current: Employee;
+
   public employees: Employee[];
-  public current: Employee = new Employee();
+  public removed: Employee[];
 
   addMode = true;
   loader = false;
@@ -37,6 +39,8 @@ export class AppComponent implements OnInit {
     public snackBar: MatSnackBar
   ) {
     this.employees = [];
+    this.removed = [];
+
     this.current = new Employee();
   }
 
@@ -47,7 +51,7 @@ export class AppComponent implements OnInit {
 
   watch() {
     this.employeeService.employeesObservable.subscribe(data => {
-      if (data == null) {
+      if (data == null || this.removed[data.id]) {
         return;
       }
 
@@ -107,6 +111,8 @@ export class AppComponent implements OnInit {
 
   remove(index: number, employee: Employee) {
     this.loader = true;
+
+    this.removed[employee.id] = employee;
     this.clear(index);
 
     this.employeeService.delete(employee.id).subscribe(
