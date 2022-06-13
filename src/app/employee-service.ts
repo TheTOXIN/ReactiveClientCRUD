@@ -39,7 +39,6 @@ export class EmployeeService {
     return this.http.get<Employee[]>(this.EMPLOYEE_URL).pipe();
   }
 
-  // Deprecated
   public stream() {
     const streamURL = this.URL + '/stream';
     const eventSource = new EventSource(streamURL);
