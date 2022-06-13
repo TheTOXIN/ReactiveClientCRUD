@@ -176,6 +176,6 @@ export class AppComponent implements OnInit {
   }
 
   gitHub() {
-    document.location.href = 'https://github.com/TheTOXIN/ReactiveServerCRUD';
+    window.open('https://github.com/TheTOXIN/ReactiveServerCRUD', '_blank');
   }
 }

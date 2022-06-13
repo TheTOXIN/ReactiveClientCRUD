@@ -39,6 +39,7 @@ export class EmployeeService {
     return this.http.get<Employee[]>(this.EMPLOYEE_URL).pipe();
   }
 
+  // Deprecated
   public stream() {
     const streamURL = this.URL + '/stream';
     const eventSource = new EventSource(streamURL);
@@ -46,6 +47,19 @@ export class EmployeeService {
     eventSource.addEventListener('employees', (event: any) => {
       const employee = JSON.parse(event.data) as Employee;
       this.employeesBehavior.next(employee);
+    });
+  }
+
+  // https://stackoverflow.com/questions/20123762/what-the-difference-between-onmessage-and-addeventlistener
+  public testStream(): Observable<Employee> {
+    return new Observable<Employee>((observe) => {
+      const streamURL = this.URL + '/stream';
+      const eventSource = new EventSource(streamURL);
+
+      eventSource.onmessage = (event) => {
+        const employee = JSON.parse(event.data) as Employee;
+        observe.next(employee);
+      };
     });
   }
 }
