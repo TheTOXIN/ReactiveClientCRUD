@@ -43,10 +43,18 @@ export class EmployeeService {
   public stream() {
     const streamURL = this.URL + '/stream';
     const eventSource = new EventSource(streamURL);
+    console.log('STREAM CONNECT');
 
     eventSource.addEventListener('employees', (event: any) => {
       const employee = JSON.parse(event.data) as Employee;
       this.employeesBehavior.next(employee);
+    });
+
+    eventSource.addEventListener('error', (error: any) => {
+      console.log('ERROR CONNECT');
+      console.log(error);
+
+      eventSource.close();
     });
   }
 
@@ -55,7 +63,6 @@ export class EmployeeService {
     return new Observable<Employee>((observe) => {
       const streamURL = this.URL + '/stream';
       const eventSource = new EventSource(streamURL);
-
       eventSource.onmessage = (event) => {
         const employee = JSON.parse(event.data) as Employee;
         observe.next(employee);
